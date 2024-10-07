@@ -17,14 +17,11 @@
 </head>
 
 <body>
-    <div
-        class="content"
-        x-data="form"
-    >
-        <div class="title m-b-md">
+    <div x-data="form">
+        <div>
             422 Test
         </div>
-        <div class="links">
+        <div>
             <form @submit.prevent="postForm">
                 @csrf
                 <input
@@ -35,28 +32,37 @@
                 <button type="submit">Submit</button>
             </form>
         </div>
+        <div>Status: <span x-text="status"></span></div>
+        <div>Response: <span x-text="response"></span></div>
     </div>
 </body>
 
 <script>
     document.addEventListener('alpine:init', () => {
         Alpine.data('form', () => ({
+            response: null,
+            status: null,
+
             postForm() {
                 fetch('/test', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-                    },
-                    body: JSON.stringify({
-                        email: document.querySelector('input[name="email"]').value
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                        },
+                        body: JSON.stringify({
+                            email: document.querySelector('input[name="email"]').value
+                        })
                     })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                })
+                    .then(response => {
+                        this.status = response.status
+                        return response.json()
+                    })
+                    .then(data => {
+                        this.response = JSON.stringify(data)
+                        console.log(data)
+                    })
             }
         }))
     })
