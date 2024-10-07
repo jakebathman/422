@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome', [
-        'headers' => request()->headers->all(),
+        'headers' => collect(request()->headers)->except('cookie'),
     ]);
 });
 

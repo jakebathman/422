@@ -17,7 +17,7 @@
 
 </head>
 
-<body>
+<body class="p-6">
     <div
         x-data="form"
         class="flex flex-col gap-5"
