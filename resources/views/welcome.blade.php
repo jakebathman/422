@@ -49,7 +49,7 @@
 
         <hr />
         <div class="">
-            <span class="text-lg font-bold">Request headers (for `welcome` request):</span>
+            <span class="text-lg font-bold">Request headers (to load this page):</span>
             <div>
                 CloudFlare proxy?
                 @if ($headers->has('cf-ray'))
